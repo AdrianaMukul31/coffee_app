@@ -1,4 +1,5 @@
 import 'package:coffee_app/res/resorces_list.dart';
+import 'package:coffee_app/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -98,6 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
            ),
            SizedBox(height: 25),
+           // this is only static not dinamic. just for UI
            SizedBox(height: 30,
            child: ListView.builder(
             itemCount: 5,
@@ -121,6 +123,147 @@ class _HomeScreenState extends State<HomeScreen> {
            },
           ),
         ),
+        SizedBox(height: 20),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 270,
+                  width: double.infinity,
+                  child: ListView.builder(
+                    itemCount: 9,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index){
+                      return InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder:
+                          (context) => ProductScreen(index: index,),));
+                        },
+                        child: Card(
+                          elevation: 20,
+                          color: Colors.white.withOpacity(0.1),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          margin: EdgeInsets.only(right: 20),
+                          child: Container(
+                            padding: EdgeInsets.all(15),
+                            width: 155,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: SizedBox(height: 120, width: double.infinity,
+                                  child: Stack(
+                                    children: [
+                                      Positioned.fill(child: Image(image: images[index],
+                                      fit: BoxFit.cover,
+                                      ),),
+                                      Align(
+                                        alignment: Alignment.topRight,
+                                        child: Container(
+                                          height: 25,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                            color: Color(0xFF1d2630)
+                                                .withOpacity(0.7),
+                                            borderRadius: 
+                                                BorderRadius.only(
+                                              bottomLeft: 
+                                                  Radius.circular(10),
+                                                ),  
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Icon(
+                                                Icons.star,
+                                                color: Colors.orange,
+                                                size: 14,
+                                              ),
+                                              Text(
+                                                ratting[index].toString(),
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  names[index],
+                                  style: TextStyle(color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  with_[index],
+                                  style: TextStyle(
+                                    color: Colors.white.withOpacity(0.5),
+                                    fontSize: 15,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Text("\$ ",
+                                      style: TextStyle(
+                                        color: Colors.orange,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      ),
+                                    ),
+                                    Text(prices[index],
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  "Special for you",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ), 
+                ),
+                SizedBox(height: 20),
+                 customCard(images[5]),
+                SizedBox(height: 20),
+                 customCard(images[6]),
+                SizedBox(height: 20),
+                 customCard(images[7]),
+                SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ),
         ],
       ),
       ),
@@ -138,6 +281,44 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget circleIcon(){
     return Icon(Icons.circle, color: Colors.white.withOpacity(0.5),
     size: 10,);
+  }
+  Widget customCard(AssetImage asset){
+    return Card(
+      color: Colors.white.withOpacity(0.1),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15),),
+      child: Container(
+        margin: EdgeInsets.all(10),
+        height: 120,
+        width: double.infinity,
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                height: double.infinity,
+                width: 120,
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: asset, fit: BoxFit.cover),
+                ),
+              ),
+            ),
+            SizedBox(width: 20),
+            Column(
+              children: [
+                Text(
+                  "5 Coffee beans You\nMust Try!",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 
 }
